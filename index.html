@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive 3D Heavy Sphere</title>
+    <title>Volume Shader Benchmark</title>
     <style>
         body {
             margin: 0;
@@ -15,143 +15,120 @@
     </style>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Setup scene, camera and renderer
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-        camera.position.z = 50;
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.body.appendChild(renderer.domElement);
-
-        // Add light to the scene
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-
-        const pointLight = new THREE.PointLight(0xff0000, 2, 500);
-        pointLight.position.set(50, 50, 50);
-        scene.add(pointLight);
-
-        const pointLight2 = new THREE.PointLight(0x0000ff, 2, 500);
-        pointLight2.position.set(-50, -50, -50);
-        scene.add(pointLight2);
-
-        // High-resolution sphere with vertex distortions
-        const geometry = new THREE.SphereGeometry(20, 512, 512); // Very high resolution
-
-        const material = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            metalness: 0.8,
-            roughness: 0.2,
-            displacementScale: 5, // Intensity of the height map
-            wireframe: false, // Enable for debugging visuals
-            emissive: 0x333333,
-        });
-
-        // Displacement map for deforming the sphere
-        const loader = new THREE.TextureLoader();
-        loader.load('https://threejs.org/examples/textures/terrain/heightmap.png', (texture) => {
-            material.displacementMap = texture;
-            material.needsUpdate = true;
-        });
-
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
-
-        // Interactive rotation setup
-        let isDragging = false;
-        let previousMousePosition = {
-            x: 0,
-            y: 0
-        };
-
-        document.addEventListener('mousedown', (event) => {
-            isDragging = true;
-            previousMousePosition.x = event.clientX;
-            previousMousePosition.y = event.clientY;
-        });
-
-        document.addEventListener('mousemove', (event) => {
-            if (isDragging) {
-                const deltaX = event.clientX - previousMousePosition.x;
-                const deltaY = event.clientY - previousMousePosition.y;
-
-                sphere.rotation.y += deltaX * 0.01; // Rotate horizontally
-                sphere.rotation.x += deltaY * 0.01; // Rotate vertically
-
-                previousMousePosition.x = event.clientX;
-                previousMousePosition.y = event.clientY;
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
-
-        // Touch events for mobile
-        document.addEventListener('touchstart', (event) => {
-            isDragging = true;
-            previousMousePosition.x = event.touches[0].clientX;
-            previousMousePosition.y = event.touches[0].clientY;
-        });
-
-        document.addEventListener('touchmove', (event) => {
-            if (isDragging) {
-                const deltaX = event.touches[0].clientX - previousMousePosition.x;
-                const deltaY = event.touches[0].clientY - previousMousePosition.y;
-
-                sphere.rotation.y += deltaX * 0.01;
-                sphere.rotation.x += deltaY * 0.01;
-
-                previousMousePosition.x = event.touches[0].clientX;
-                previousMousePosition.y = event.touches[0].clientY;
-            }
-        });
-
-        document.addEventListener('touchend', () => {
-            isDragging = false;
-        });
-
-        // Particle system (background stars)
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 100000; // 100,000 particles for performance stress
-        const positions = new Float32Array(particlesCount * 3);
-
-        for (let i = 0; i < particlesCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 2000;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+        // Setup WebGL canvas and context
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+        if (!gl) {
+            document.body.innerHTML = '<h1>⚠️ WebGL not supported!</h1>';
+            throw new Error('WebGL not supported on this browser!');
         }
+        document.body.appendChild(canvas);
 
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 0.05
-        });
+        // Resize canvas to fit the screen
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+        }
+        resize();
+        window.addEventListener('resize', resize);
 
-        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particles);
+        // Vertex shader code
+        const vertexShaderSource = `
+            precision highp float;
+            attribute vec4 a_position;
+            void main(void) {
+                gl_Position = a_position;
+            }
+        `;
 
-        // Animation
-        const animate = function () {
-            sphere.rotation.x += 0.001; // Add slow rotation
-            sphere.rotation.y += 0.002;
+        // Fragment shader code (heavy fractal math for GPU stress)
+        const fragmentShaderSource = `
+            precision highp float;
+            uniform vec2 u_resolution;
+            uniform float u_time;
 
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        };
+            void main(void) {
+                vec2 uv = (gl_FragCoord.xy / u_resolution.xy) * 2.0 - 1.0;
+                uv.x *= u_resolution.x / u_resolution.y; // Maintain aspect ratio
 
-        animate();
+                vec3 color = vec3(0.0);
+                
+                vec2 z = uv;
+                float iterations = 0.0;
 
-        // Handle resizing
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
+                for (float i = 0.0; i < 200.0; i++) {
+                    z = z * z + uv;
+                    if (length(z) > 4.0) break;
+                    iterations += 1.0;
+                }
+
+                color.r = 0.5 + 0.5 * cos(3.0 + iterations * 0.15 + u_time * 0.1);
+                color.g = 0.5 + 0.5 * cos(2.0 + iterations * 0.1 + u_time * 0.15);
+                color.b = 0.5 + 0.5 * cos(1.0 + iterations * 0.2 + u_time * 0.2);
+
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        // Compile shaders
+        function compileShader(type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                const info = gl.getShaderInfoLog(shader);
+                gl.deleteShader(shader);
+                throw new Error(`Could not compile shader:\n${info}`);
+            }
+            return shader;
+        }
+        const vertexShader = compileShader(gl.VERTEX_SHADER, vertexShaderSource);
+        const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+        // Create shader program
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            const info = gl.getProgramInfoLog(program);
+            gl.deleteProgram(program);
+            throw new Error(`Could not link program:\n${info}`);
+        }
+        gl.useProgram(program);
+
+        // Define fullscreen rectangle
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            -1, -1,
+             1, -1,
+            -1,  1,
+            -1,  1,
+             1, -1,
+             1,  1
+        ]), gl.STATIC_DRAW);
+
+        const aPosition = gl.getAttribLocation(program, 'a_position');
+        gl.enableVertexAttribArray(aPosition);
+        gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+        // Set uniforms
+        const uResolution = gl.getUniformLocation(program, 'u_resolution');
+        const uTime = gl.getUniformLocation(program, 'u_time');
+
+        // Animation loop
+        function render(time) {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.uniform2f(uResolution, canvas.width, canvas.height);
+            gl.uniform1f(uTime, time * 0.001);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
     </script>
 </body>
 </html>
