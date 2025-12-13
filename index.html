@@ -10,7 +10,7 @@
 </style>
 </head>
 <body>
-<div id="hud">iPhone 13 GPU Test 🔥</div>
+<div id="hud">BeGaiL GPU & CPU render </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
@@ -51,7 +51,7 @@ const material = new THREE.ShaderMaterial({
   `
 });
 
-const COUNT = 2000; // تعداد instancing بالا برای فشار GPU
+const COUNT = 6000; // تعداد instancing بالا برای فشار GPU
 const mesh = new THREE.InstancedMesh(geometry, material, COUNT);
 const dummy = new THREE.Object3D();
 
